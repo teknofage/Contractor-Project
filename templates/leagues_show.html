@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<a href='/'>Back to Home</a>
+<div class='row'>
+    <div class='col-sm-6 col-sm-offset-3'>
+        {% for league in allLeagues %}
+            <h3><a href="/league/{{league._id}}">{{ league.name }}</a></h3>
+
+            <div class="dropdown">
+                <!-- <button onclick="myFunction()" class="dropbtn">Edit / Delete</button> -->
+                <div id="myDropdown" class="dropdown-content">
+                    <a href="/leagues/{{league._id}}/edit">Edit</a>
+                    <a href="/leagues/{{league._id}}/delete">Delete</a>
+                    <a href="/league/{{league._id}}">Show</a>
+                </div>
+                </div>
+        {% endfor %}
+        
+
+        
+
+        <hr>
+
+    <!-- Show Reviews -->
+    <!-- {% for review in reviews %}
+        {% include 'partials/review.html' %}
+    {% endfor %} -->
+    
+    </div>
+</div>
+{% endblock %}

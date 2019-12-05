@@ -1,0 +1,16 @@
+<!-- templates/fields_index.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Fields</h1>
+
+<a href='/fields/new'>New Field</a>
+<div class='row'>
+    {% for field in fields %}
+        <div class='col-md-3'>
+            <h2><a href='/fields/{{ field._id }}'>{{ field.title }}</a></h2>
+            <small>{{ field.description }}</small>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

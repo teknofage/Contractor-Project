@@ -1,0 +1,16 @@
+<!-- templates/coaches_index.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Coaches</h1>
+
+<a href='/coaches/new'>New Coach</a>
+<div class='row'>
+    {% for coach in coach %}
+        <div class='col-md-3'>
+            <h2><a href='/coaches/{{ coach._id }}'>{{ coach.name }}</a></h2>
+            <small>{{ coach.resume }}</small>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
