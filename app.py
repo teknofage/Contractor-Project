@@ -51,7 +51,7 @@ def coaches_new():
     return render_template('coaches_new.html', coach={}, title='New Coach')
 
 
-@app.route('/coaches/')
+@app.route('/coaches_show/')
 def coaches_show():
     """Show all coaches."""
     allCoaches = coaches.find()
