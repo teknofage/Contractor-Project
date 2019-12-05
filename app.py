@@ -222,8 +222,8 @@ def fields_submit():
     """Submit a new field."""
     field = {
         'name': request.form.get('name'),
-        'number_of_pitches': request.form.get(['number_of_pitches']),
-        'turf': request.form.get(['turf']).split(),
+        'number_of_pitches': request.form.get('number_of_pitches'),
+        'turf': request.form.get('turf').split(),
         'location': request.form.get('location').split(),
         'reviews': request.form.get('reviews')
     }
