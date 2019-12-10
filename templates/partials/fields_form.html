@@ -8,15 +8,15 @@
     
     <!-- Number of Full_pitches -->
     <div class='form-group'>
-        <label for='full_pitches'>Number of Full Pitches</label><br>
-        <input class='form-control' id='full_pitches' type='text' name='full_pitches' value='{{ field.full_pitches }}' />
+        <label for='number_of_pitches'>Number of Full Pitches</label><br>
+        <input class='form-control' id='number_of_pitches' type='text' name='number_of_pitches' value='{{ field.number_of_pitches }}' />
     </div>
     
     <!-- Turf -->
     <div class='form-group'>
         <label for='field-turf'>Turf</label><br>
         <p class='text-muted'>Add turf in the form of ''.</p>
-        <textarea class='form-control' id='field-turf' name='turf' rows='10' />{{ "\n".join(field.turf) }}</textarea>
+        <textarea class='form-control' id='field-turf' name='turf' rows='10'>{{ field.turf }}</textarea>
     </div>
 
     <!-- Location -->

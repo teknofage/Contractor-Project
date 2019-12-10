@@ -25,6 +25,17 @@ teams =db.teams
 
 app = Flask(__name__)
 
+@app.route('/login')
+def login():
+    """Show login"""
+    return render_template("login.html", login=login)
+
+
+@app.route('/registration')
+def registration():
+    """Show registration"""
+    return render_template("registration.html", registration=registration)
+
 #Coaches
 @app.route('/')
 def coaches_index():
@@ -38,7 +49,7 @@ def coaches_submit():
     coach = {
         'name': request.form.get('name'),
         'resume': request.form.get('resume'),
-        'qualifications': request.form.get('qualifications').split(),
+        'qualifications': request.form.get('qualifications'),
         'reviews': request.form.get('reviews')
     }
     coach_id = coaches.insert_one(coach).inserted_id
@@ -51,7 +62,7 @@ def coaches_new():
     return render_template('coaches_new.html', coach={}, title='New Coach')
 
 
-@app.route('/coaches_show/')
+@app.route('/coaches')
 def coaches_show():
     """Show all coaches."""
     allCoaches = coaches.find()
@@ -60,7 +71,6 @@ def coaches_show():
     return render_template('coaches_show.html', allCoaches=allCoaches)
 
 
-#Mitchell inserted this route while trying to help me
 @app.route('/coach/<coach_id>')
 def coach_show(coach_id):
     """Show a single coach."""
@@ -82,7 +92,7 @@ def coaches_update(coach_id):
     updated_coach = {
         'name': request.form.get('name'),
         'resume': request.form.get('resume'),
-        'qualifications': request.form.get('qualifications').split(),
+        'qualifications': request.form.get('qualifications'),
         'reviews': request.form.get('reviews')
     }
     coaches.update_one(
@@ -134,9 +144,8 @@ def leagues_submit():
     league = {
         'name': request.form.get('name'),
         'age_group': request.form.get('age_group'),
-        'level': request.form.get('level').split(),
-        'website': request.form.get('website').split(),
-        'reviews': request.form.get('reviews')
+        'level': request.form.get('level'),
+        'website': request.form.get('website')
     }
     league_id = leagues.insert_one(league).inserted_id
     return redirect(url_for('leagues_show', league_id=league_id))
@@ -167,11 +176,10 @@ def leagues_edit(league_id):
 def leagues_update(league_id):
     """Submit an edited league."""
     updated_league = {
-        'name': request.form.get('title'),
+        'name': request.form.get('name'),
         'age_group': request.form.get('age_group'),
-        'level': request.form.get('level').split(),
-        'website': request.form.get('website').split(),
-        'reviews': request.form.get('reviews')
+        'level': request.form.get('level'),
+        'website': request.form.get('website')
     }
     leagues.update_one(
         {'_id': ObjectId(league_id)},
@@ -223,9 +231,8 @@ def fields_submit():
     field = {
         'name': request.form.get('name'),
         'number_of_pitches': request.form.get('number_of_pitches'),
-        'turf': request.form.get('turf').split(),
-        'location': request.form.get('location').split(),
-        'reviews': request.form.get('reviews')
+        'turf': request.form.get('turf'),
+        'location': request.form.get('location')
     }
     field_id = fields.insert_one(field).inserted_id
     return redirect(url_for('fields_show', field_id=field_id))
@@ -237,19 +244,13 @@ def fields_new():
     return render_template('fields_new.html', field={}, title='New field')
 
 
-@app.route('/fields/<field_id>')
+@app.route('/field/<field_id>')
 def field_show(field_id):
     """Show a single field."""
     field = fields.find_one({'_id': ObjectId(field_id)})
     field_reviews = reviews.find({'field_id': ObjectId(field_id)})
-    return render_template('field_show.html', field=field, reviews=field_reviews)
+    return render_template('field_show.html', field=field)
 
-# @app.route('/fields/<field_id>')
-# def fields_show(field_id):
-#     """Show all fields."""
-#     field = fields.find_one({'_id': ObjectId(field_id)})
-#     field_reviews = reviews.find({'field_id': ObjectId(field_id)})
-#     return render_template('fields_show.html', field=field, reviews=field_reviews)
 
 @app.route('/fields/<field_id>/edit')
 def fields_edit(field_id):
@@ -263,9 +264,9 @@ def fields_update(field_id):
     """Submit an edited field."""
     updated_field = {
         'title': request.form.get('title'),
-        'number_of_pitches': request.form.get(['number_of_pitches']),
-        'turf': request.form.get(['turf']).split(),
-        'location': request.form.get('location').split(),
+        'number_of_pitches': request.form.get('number_of_pitches'),
+        'turf': request.form.get('turf'),
+        'location': request.form.get('location'),
         'reviews': request.form.get('reviews')
     }
     fields.update_one(
@@ -280,6 +281,16 @@ def fields_delete(field_id):
     fields.delete_one({'_id': ObjectId(field_id)})
     return redirect(url_for('fields_index'))
 
+
+# Helper Function for determining which reviews to call into the resource pages
+# def review_type():
+#     HID = None
+#     if (needs coach):
+#         HID = coach._id
+#     elif (needs league):
+#         HID = league._id
+#     elif (needs field):
+#         HID = field._id
 
 @app.route('/fields/reviews', methods=['POST'])
 def field_reviews_new():

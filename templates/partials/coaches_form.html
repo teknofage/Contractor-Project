@@ -6,12 +6,18 @@
         <input class='form-control' id='coach-name' type='text' name='name' value='{{ coach.name }}'/>
     </div>
     
-    <!-- resume -->
+    <!-- Resume -->
     <div class='form-group'>
         <label for='resume'>Resume</label><br>
         <p class='text-muted'>Add resume experience in the form of ''. Separate with a newline.</p>
-        <textarea class='form-control' id='coach-resume' name='resume' rows='10' />{{ "\n".join(coach.resume) }}</textarea>
+        <textarea class='form-control' id='coach-resume' name='resume' rows='10'>{{ coach.resume }}</textarea>
     </div>
+
+    <!-- Upload Resume Document -->
+    <!-- <div class='form-group'></div>
+    <form action="myform.cgi"> <input type="file" name="fileupload" value="fileupload" id="fileupload"> <label for="fileupload"> Select a file to upload</label> <input type="submit" value="submit"> </form>
+</div> -->
+
     
     <!-- Qualifications -->
     <div class='form-group'>
