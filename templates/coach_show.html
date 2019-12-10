@@ -6,10 +6,8 @@
     <div class='col-sm-6 col-sm-offset-3'>
         <h1>{{ coach.name }}</h1>
         <h2>{{ coach.resume }}</h2>
-        {% for qualification in coach.qualifications %}
-        <p>{{ qualification }}</p>
+        <h3>{{ coach.qualification }}</h3>
 
-        {% endfor %}
         <p><a href='/coaches/{{ coach._id }}/edit'>Edit</a></p>
         <p><form method='POST' action='/coaches/{{ coach._id }}/delete'>
             <input type='hidden' name='_method' value='DELETE'>
