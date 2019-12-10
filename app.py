@@ -20,11 +20,12 @@ leagues = db.leagues
 age_group = db.age_group
 level = db.level 
 website = db.website
-teams =db.teams
+teams = db.teams
 
 
 app = Flask(__name__)
 
+# Login and Registration
 @app.route('/login')
 def login():
     """Show login"""
@@ -281,16 +282,6 @@ def fields_delete(field_id):
     fields.delete_one({'_id': ObjectId(field_id)})
     return redirect(url_for('fields_index'))
 
-
-# Helper Function for determining which reviews to call into the resource pages
-# def review_type():
-#     HID = None
-#     if (needs coach):
-#         HID = coach._id
-#     elif (needs league):
-#         HID = league._id
-#     elif (needs field):
-#         HID = field._id
 
 @app.route('/fields/reviews', methods=['POST'])
 def field_reviews_new():
