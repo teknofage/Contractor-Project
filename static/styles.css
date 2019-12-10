@@ -5,6 +5,7 @@ body {
 .navbar {
     padding: 1rem;
     background-color: orange;
+    text-shadow: 2px 2px 5px red;
 }
 
 .hero-background-img {
@@ -31,9 +32,9 @@ body {
     opacity: 0.5;
 }
 
-.herotext  {
+.hero-text  {
 padding: 2.5em;
-
+text-shadow: 2px 2px 5px red;
 }
 
 .footer {
