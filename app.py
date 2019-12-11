@@ -37,13 +37,13 @@ def registration():
     """Show registration"""
     return render_template("registration.html", registration=registration)
 
-#Coaches
+
 @app.route('/')
-def coaches_index():
-    """Show all coaches."""
+def index():
+    """Show index."""
     return render_template('coaches_index.html', coaches=coaches.find())
 
-
+#Coaches
 @app.route('/coaches', methods=['POST'])
 def coaches_submit():
     """Submit a new coach."""
@@ -195,26 +195,6 @@ def leagues_delete(league_id):
     return redirect(url_for('leagues_show'))
 
 
-@app.route('/leagues/reviews', methods=['POST'])
-def league_reviews_new():
-    """Submit a new review."""
-    review = {
-        'title': request.form.get('title'),
-        'content': request.form.get('content'),
-        'league_id': ObjectId(request.form.get('league_id'))
-    }
-    print(review)
-    review_id = reviews.insert_one(review).inserted_id
-    return redirect(url_for('leagues_show', league_id=request.form.get('league_id')))
-
-
-@app.route('/leagues/reviews/<review_id>', methods=['POST'])
-def league_reviews_delete(review_id):
-    """Action to delete a review."""
-    review = reviews.find_one({'_id': ObjectId(review_id)})
-    reviews.delete_one({'_id': ObjectId(review_id)})
-    return redirect(url_for('leagues_show', league_id=review.get('league_id')))
-
 #Fields
 
 @app.route('/fields')
@@ -282,26 +262,6 @@ def fields_delete(field_id):
     fields.delete_one({'_id': ObjectId(field_id)})
     return redirect(url_for('fields_index'))
 
-
-@app.route('/fields/reviews', methods=['POST'])
-def field_reviews_new():
-    """Submit a new review."""
-    review = {
-        'title': request.form.get('title'),
-        'content': request.form.get('content'),
-        'field_id': ObjectId(request.form.get('field_id'))
-    }
-    print(review)
-    review_id = reviews.insert_one(review).inserted_id
-    return redirect(url_for('fields_show', field_id=request.form.get('field_id')))
-
-
-@app.route('/fields/reviews/<review_id>', methods=['POST'])
-def field_reviews_delete(review_id):
-    """Action to delete a review."""
-    review = reviews.find_one({'_id': ObjectId(review_id)})
-    reviews.delete_one({'_id': ObjectId(review_id)})
-    return redirect(url_for('fields_show', field_id=review.get('field_id')))
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=os.environ.get('PORT', 5000))
