@@ -9,7 +9,7 @@ from unittest.mock import patch
 
 sample_id_list = ['hY7m5jjJ9mM','CQ85sUNBK7w']
 # All of these are new mock data that we'll use
-sample_coach_id = ObjectId('5d55cffc4a3d4031f42827a3')
+sample_id = ObjectId('5d55cffc4a3d4031f42827a3')
 sample_coach = {
     'name': 'Papa Smurf',
     'resume': 'Perennial winning coach of Smurf Cup',
@@ -83,7 +83,7 @@ class AppTests(TestCase):
         """Test showing a coach field."""
         mock_find.return_value = sample_coach
 
-        result = self.app.get(f'/coach/{sample_coach_id}')
+        result = self.app.get(f'/coach/{sample_id}')
         self.assertEqual(result.status, '200 OK')
         
     # @mock.patch('pymongo.collection.Collection.insert_one')
@@ -93,6 +93,9 @@ class AppTests(TestCase):
     #     # After submitting, should redirect to that playlist's page
     #     self.assertEqual(result.status, '302 FOUND')
     #     mock_insert.assert_called_with(sample_coach)
+    
+
+    
 
     # Testing Routes
     def test_index(self):
@@ -139,11 +142,7 @@ class AppTests(TestCase):
         """Test the app's create a new league page."""
         result = self.app.get('/leagues/new')
         self.assertEqual(result.status, '200 OK')
-        
-    # def test_leagues_delete(self):
-    #     """Test the app's delete a leagues page."""
-    #     result = self.app.get('/leagues/{league_id}/delete')
-    #     self.assertEqual(result.status, '200 OK')
+    
         
     def test_fields_show(self):
         """Test the app's show all fields page."""
@@ -154,3 +153,35 @@ class AppTests(TestCase):
         """Test the app's create a new field page."""
         result = self.app.get('/fields/new')
         self.assertEqual(result.status, '200 OK')
+        
+    def test_fields_edit(self):
+        """Test the app's Show the edit form for a field."""
+        result = self.app.get(f'/fields/{str(sample_id)}/edit')
+        self.assertEqual(result.status, '200 OK')
+        page_content = result.get_data(as_text=True)
+        self.assertIn('Number of Full Pitches', page_content)
+        
+    def test_coaches_edit(self):
+        """Test the app's Show the edit form for a coach."""
+        result = self.app.get(f'/coaches/{str(sample_id)}/edit')
+        self.assertEqual(result.status, '200 OK')
+        page_content = result.get_data(as_text=True)
+        self.assertIn('Add resume experience', page_content)
+        
+    def test_leagues_edit(self):
+        """Test the app's Show the edit form for a league."""
+        result = self.app.get(f'/leagues/{str(sample_id)}/edit')
+        self.assertEqual(result.status, '200 OK')
+        page_content = result.get_data(as_text=True)
+        self.assertIn('Age Group', page_content)
+        
+    # def test_fields_delete(self):
+    #     """Test the app's delete field route."""
+    #     result = self.app.post(f'/fields/{str(sample_id)}/delete')
+    #     self.assertEqual(result.status, '200 OK')
+        
+        
+    # def test_leagues_delete(self):
+    #     """Test the app's delete a leagues page."""
+    #     result = self.app.post(f'/leagues/{str(sample_id)}/delete')
+    #     self.assertEqual(result.status, '200 OK')
